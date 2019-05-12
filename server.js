@@ -11,10 +11,8 @@ const Clarifai = require('clarifai');
 const db=knex({
 	client:'pg',
 	connection:{
-		host:'127.0.0.1',
-		user:'postgres',
-		password:'aaaazz1989',
-		database:'yelpcampdb'
+		connectionString:process.env.DATABASE_URL,
+		ssl: true		
 	}
 });
 
@@ -42,7 +40,7 @@ app.get('/Shop',(req,res)=>{
 app.get('/admin/:id',(req,res)=>{
 	const {id}=req.params;	
 	//security check (if the user is an admin)
-	//if the id received from the FE = admin id stored in process.env : respond admin id id=16
+	//if the id received from the FE = admin id stored in process.env : respond admin id 
 	if(Number(id)===process.env.admin_id){ //process.env.admin_id
 		return res.json(process.env.admin_id) //process.env.admin_id
 	}else{
@@ -343,7 +341,7 @@ app.post('/forgot',(req,res)=>{
 					service: 'Gmail',		        
 					auth: {
 		            user: 'TestNodemailerYelcamp@gmail.com', 
-		            pass: 'TestNodemailerYelcampTestNodemailerYelcamp' //process.env.mailPass
+		            pass: `${process.env.mail_password}` 
 		        }
 		    });	
 				let mailOptions = {
@@ -437,7 +435,7 @@ app.get('/singlecamp/:id',(req,res)=>{
 
 app.post('/googleApiK',(req,res)=>{
 	const {camp_name}=req.body;
-	fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${camp_name}&key=AIzaSyDnK5KE2R0T2BLQSV2BNI5E5z_EOIWfVVo`)
+	fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${camp_name}&key=${process.env.google_api_key}`)
     .then(response=>{
       return response.json()      
     })
@@ -447,7 +445,7 @@ app.post('/googleApiK',(req,res)=>{
 })
 
 const appCla = new Clarifai.App({
- apiKey: `37ea9fbb01734d06a2b51a3063d82044`
+ apiKey: `${process.env.clarifai_api_key}`
 });
 
 app.post('/handleApiCall',(req,res)=>{
