@@ -41,7 +41,7 @@ app.get('/admin/:id',(req,res)=>{
 	const {id}=req.params;	
 	//security check (if the user is an admin)
 	//if the id received from the FE = admin id stored in process.env : respond admin id 
-	if(Number(id)===process.env.admin_id){ //process.env.admin_id
+	if(Number(id)===Number(process.env.admin_id)){ //process.env.admin_id
 		return res.json(process.env.admin_id) //process.env.admin_id
 	}else{
 		return res.json('Error.')
@@ -350,7 +350,7 @@ app.post('/forgot',(req,res)=>{
 		        subject: 'Hello', // Subject line
 		        text: 'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
 		        'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
-		        'http://localhost:3000/ResetPassword/' + data[0].resetpasstoken + '\n\n' +
+		        'https://yelpcamponheroku.herokuapp.com/ResetPassword/' + data[0].resetpasstoken + '\n\n' +
 		        'If you did not request this, please ignore this email and your password will remain unchanged.\n' // plain text body
 		      };
 		      transporter.sendMail(mailOptions, (error, info) => {
