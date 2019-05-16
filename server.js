@@ -338,14 +338,14 @@ app.post('/forgot',(req,res)=>{
 				res.json('data sent.')
 				//sending mail with nodemailer to the user (with the link+token to reset the password)				
 				let transporter = nodemailer.createTransport({
-					service: 'Gmail',		        
+					service: 'yahoo',		        
 					auth: {
-		            user: 'TestNodemailerYelcamp@gmail.com', 
+		            user: 'TestNodemailerYelcamp@yahoo.com', 
 		            pass: `${process.env.mail_password}` 
 		        }
 		    });	
 				let mailOptions = {
-		        from: 'TestNodemailerYelcamp@gmail.com', // sender address
+		        from: 'TestNodemailerYelcamp@yahoo.com', // sender address
 		        to: user[0].email, // list of receivers
 		        subject: 'Hello', // Subject line
 		        text: 'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
